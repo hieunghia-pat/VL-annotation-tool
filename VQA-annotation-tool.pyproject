@@ -1,0 +1,3 @@
+{
+    "files": ["media/save-folder.png","media/close-folder.png","components/MainMenuBar.qml","components/MainToolBar.qml","media/open-folder.png","resource.qrc","main.py","main.qml","media/exit.png","components/AnnotationViewer.qml","components/ImageViewer.qml","components/MainMenuBar.qml","components/MainToolBar.qml"]
+}

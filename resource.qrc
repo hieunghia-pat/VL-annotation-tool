@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>media/close-folder.png</file>
+        <file>media/exit.png</file>
+        <file>media/open-folder.png</file>
+        <file>media/add.png</file>
+        <file>media/copy.png</file>
+        <file>media/cut.png</file>
+        <file>media/paste.png</file>
+        <file>components/AnnotationViewer.qml</file>
+    </qresource>
+</RCC>
