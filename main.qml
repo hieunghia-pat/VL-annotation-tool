@@ -7,60 +7,49 @@ import QtQuick.Layouts 1.3
 import "components"
 
 ApplicationWindow {
-    id: mainWindow
-    title: "Vision-Language Annotation Tool"
-    width: 1080
-    height: 720
-    visible: true
+	id: mainWindow
+	title: "Vision-Language Annotation Tool"
+	width: 1080
+	height: 720
+	visible: true
 
-    background: Rectangle {
-        color: "white"
-    }
+	background: Rectangle {
+		color: "white"
+	}
 
-    FolderDialog {
-        id: folderDialog
-        currentFolder: StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]
-        onAccepted: {
-            model.setSelectedFolderToOpen(currentFolder)
-        }
-    }
+	FolderDialog {
+		id: folderDialog
+		currentFolder: StandardPaths.standardLocations(
+						   StandardPaths.DocumentsLocation)[0]
+		onAccepted: {
+			model.setSelectedFolderToOpen(currentFolder)
+		}
+	}
 
-    Dialog {
-        id: popUpDialog
-        width: parent.width/4
-        height: parent.height/4
-        modal: false
+	MessageWindow {
+		id: messageWindow
+	}
 
-        DynamicContent {
-            id: dynamicContent
-        }
-    }
+	Connections {
+		target: model
+		function onOpenNewFolder(message) {
+			messageWindow.message = "Opened a new folder"
+			messageWindow.iconUrl = "../media/information.png"
+			messageWindow.show()
+		}
+	}
 
-    Connections {
-        target: model
-        function onOpenNewFolder(message) {
-            dynamicContent.content = "Opened a new folder"
-            dynamicContent.iconUrl = "../media/information.png"
-            popUpDialog.standardButtons = Dialog.Ok
-            popUpDialog.open()
-        }
-    }
+	menuBar: MainMenuBar {
+		folderDialog: folderDialog
+	}
 
-    menuBar: MainMenuBar {
-        folderDialog: folderDialog
-    }
+	Column {
+		ImageViewer {}
 
-    Column {
-        ImageViewer {
+		AnnotationViewer {}
+	}
 
-        }
-
-        AnnotationViewer {
-
-        }
-    }
-
-    header: MainToolBar {
-        folderDialog: folderDialog
-    }
+	header: MainToolBar {
+		folderDialog: folderDialog
+	}
 }
