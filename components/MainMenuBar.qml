@@ -4,11 +4,7 @@ import QtQuick.Controls 2.15
 MenuBar {
     id: mainMenuBar
 
-    property var openFolderDialog;
-    property url selectedFolderToOpen;
-
-    property var saveFolderDialog;
-    property url selectedFolderToSave;
+    property var folderDialog
 
     Menu {
         title: qsTr("&Folder")
@@ -21,8 +17,9 @@ MenuBar {
             }
 
             onTriggered: {
-                openFolderDialog.open()
-                mainMenuBar.selectedFolderToOpen = openFolderDialog.selectedFolder
+                folderDialog.title = "Select Folder to Open"
+                folderDialog.acceptLabel = "Open"
+                folderDialog.open()
             }
         }
 
@@ -34,8 +31,9 @@ MenuBar {
             }
 
             onTriggered: {
-                saveFolderDialog.open()
-                mainMenuBar.selectedFolderToSave = saveFolderDialog.selectedFolder
+                folderDialog.title = "Select Folder to Save"
+                folderDialog.acceptLabel = "Save"
+                folderDialog.open()
             }
         }
 

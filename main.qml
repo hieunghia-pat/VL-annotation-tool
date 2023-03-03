@@ -1,8 +1,8 @@
-import QtQuick 2.14
-import QtQuick.Controls 2.15
+import QtQuick 2.9
+import QtQuick.Controls 2.5
 import QtQuick.Dialogs
 import QtCore
-import QtQuick.Layouts 1.15
+import QtQuick.Layouts 1.3
 
 import "components"
 
@@ -13,21 +13,41 @@ ApplicationWindow {
     height: 720
     visible: true
 
-    FolderDialog {
-        id: openFolderDialog
-        title: "Select Folder to Open Annotation"
-        currentFolder: StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]
+    background: Rectangle {
+        color: "white"
     }
 
     FolderDialog {
-        id: saveFolderDialog
-        title: "Select Folder to Save Annotation"
+        id: folderDialog
         currentFolder: StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]
+        onAccepted: {
+            model.setSelectedFolderToOpen(currentFolder)
+        }
+    }
+
+    Dialog {
+        id: popUpDialog
+        width: parent.width/4
+        height: parent.height/4
+        modal: false
+
+        DynamicContent {
+            id: dynamicContent
+        }
+    }
+
+    Connections {
+        target: model
+        function onOpenNewFolder(message) {
+            dynamicContent.content = "Opened a new folder"
+            dynamicContent.iconUrl = "../media/information.png"
+            popUpDialog.standardButtons = Dialog.Ok
+            popUpDialog.open()
+        }
     }
 
     menuBar: MainMenuBar {
-        openFolderDialog: openFolderDialog
-        saveFolderDialog: saveFolderDialog
+        folderDialog: folderDialog
     }
 
     Column {
@@ -41,7 +61,6 @@ ApplicationWindow {
     }
 
     header: MainToolBar {
-        openFolderDialog: openFolderDialog
-        saveFolderDialog: saveFolderDialog
+        folderDialog: folderDialog
     }
 }

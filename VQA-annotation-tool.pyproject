@@ -1,3 +1,3 @@
 {
-    "files": ["media/save-folder.png","media/close-folder.png","components/MainMenuBar.qml","components/MainToolBar.qml","media/open-folder.png","resource.qrc","main.py","main.qml","media/exit.png","components/AnnotationViewer.qml","components/ImageViewer.qml","components/MainMenuBar.qml","components/MainToolBar.qml"]
+    "files": ["media/add.png","media/exit.png","media/remove.png","components/AnnotationViewer.qml","components/ImageViewer.qml","sources/Model.py","components/MainMenuBar.qml","media/paste.png","media/open-folder.png","components/MainToolBar.qml","media/about.png","media/cut.png","components/DynamicFolderDialog.qml","main.py","media/save-folder.png","main.qml","media/information.png","media/close-folder.png","media/copy.png","media/error.png","media/success.png","components/DynamicContent.qml","resource.qrc"]
 }
