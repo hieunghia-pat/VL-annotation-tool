@@ -3,73 +3,82 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 Window {
-	property string message
-	property url iconUrl
+    property string message
+    property url iconUrl
 
-	id: messageWindow
-	flags: Qt.Dialog
-	modality: Qt.ApplicationModal
-	title: "Message Box"
-	maximumWidth: contentLayout.implicitWidth
-	maximumHeight: mainLayout.implicitHeight
-	minimumWidth: contentLayout.implicitWidth
-	minimumHeight: mainLayout.implicitHeight
+    id: messageWindow
+    flags: Qt.Dialog
+    modality: Qt.ApplicationModal
+    title: "Message Box"
+    width: contentContainer.width + 20
+    minimumWidth: contentContainer.width + 20
+    height: (contentContainer.height + 20) + (button.height + 20)
+    minimumHeight: (contentContainer.height + 20) + (button.height + 20)
 
-	ColumnLayout {
-		id: mainLayout
-		anchors {
-			centerIn: parent
-			fill: parent
-		}
+    Rectangle {
+        id: contentContainer
+        width: iconContainer.width + textContainer.width
+        height: Math.max(textContainer.height, iconContainer.height)
 
-		RowLayout {
-			id: contentLayout
-			spacing: 2
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 10
+        }
 
-			Rectangle {
-				width: 32
-				height: 32
-				anchors {
-					horizontalCenter: Layout.horizontalCenter
-					fill: Layout.parent
-					centerIn: Layout.parent
-				}
+        Rectangle {
+            id: iconContainer
+            width: 32
+            height: textContainer.height
 
-				Image {
-					source: iconUrl
-					scale: Image.PreserveAspectFit
-					anchors {
-						fill: parent
-						centerIn: parent
-						margins: 5
-					}
-				}
-			}
+            anchors {
+                left: parent.left
+            }
 
-			Text {
-				text: message
-				anchors.horizontalCenter: Layout.horizontalCenter
-				Layout.margins: 5
-			}
-		}
+            Image {
+                id: icon
+                source: iconUrl
+                fillMode: Image.PreserveAspectFit
+                anchors {
+                    fill: parent
+                    centerIn: parent
+                }
+            }
+        }
 
-		Rectangle {
-			width: contentLayout.implicitWidth
-			height: button.implicitHeight
-			anchors {
-				centerIn: Layout.parent
-				fill: Layout.parent
-			}
+        Rectangle {
+            id: textContainer
+            width: messageText.implicitWidth + 20
+            height: messageText.implicitHeight + 20
 
-			Button {
-				id: button
-				text: "Ok"
-				onClicked: messageWindow.close()
-				anchors {
-					margins: 20
-					right: parent.right
-				}
-			}
-		}
-	}
+            anchors {
+                left: iconContainer.right
+            }
+
+            Text {
+                id: messageText
+                text: message
+                anchors {
+                    fill: parent
+                    centerIn: parent
+                    margins: 10
+                }
+            }
+        }
+    }
+
+    Button {
+        id: button
+        width: 64
+        text: "OK"
+        onClicked: {
+            messageWindow.close()
+        }
+
+        anchors {
+            bottom: parent.bottom
+            right: parent.right
+            margins: 10
+        }
+    }
 }
