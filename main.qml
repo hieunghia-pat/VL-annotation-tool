@@ -32,9 +32,16 @@ ApplicationWindow {
 
     Connections {
         target: model
-        function onOpenNewFolder(message) {
+
+        function onOpenNewFolder() {
             messageWindow.message = "Opened a new folder"
             messageWindow.iconUrl = "../media/information.png"
+            messageWindow.show()
+        }
+
+        function onOpenFolderError(message) {
+            messageWindow.message = message
+            messageWindow.iconUrl = "../media/error.png"
             messageWindow.show()
         }
     }

@@ -13,11 +13,9 @@ Rectangle {
         }
 
         clip: true
-        model: 5
-		delegate: AnnotationItem {
-			
-		}
+        model: 1
+        delegate: AnnotationItem {}
 
-        spacing: 5
+        spacing: 10
     }
 }
