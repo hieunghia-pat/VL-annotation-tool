@@ -2,35 +2,24 @@ import QtQuick
 import QtQuick.Controls
 
 Rectangle {
-    property string annotationLabel
-
-    Label {
-        id: questionLabel
-        text: annotationLabel
-        width: parent.width - 20
-        font.pixelSize: 20
-        anchors {
-            left: parent.left
-            margins: 10
-        }
-    }
+    height: textEditContainer.height + 10
 
     Rectangle {
+        id: textEditContainer
         width: parent.width - 10
-        height: questionEdit.height + 10
-        radius: 5
+        height: textEdit.height + 10
+        radius: 7
         anchors {
-            top: questionLabel.bottom
+            top: parent.top
             right: parent.right
         }
         border {
-            color: "gray"
+            color: "#e0e0e0"
             width: 1
         }
-        color: "white"
 
         TextEdit {
-            id: questionEdit
+            id: textEdit
             font.pixelSize: 20
             width: parent.width - 10
             anchors {
@@ -38,6 +27,7 @@ Rectangle {
                 verticalCenter: parent.verticalCenter
                 margins: 5
             }
+            padding: 3
         }
     }
 }

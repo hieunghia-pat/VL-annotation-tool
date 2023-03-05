@@ -10,12 +10,15 @@ Rectangle {
         anchors {
             fill: parent
             top: parent.top
+            margins: 5
         }
 
         clip: true
-        model: 1
-        delegate: AnnotationItem {}
+        model: 50
+        delegate: AnnotationItem {
+            annotationId: index + 1
+        }
 
-        spacing: 10
+        spacing: 20
     }
 }
