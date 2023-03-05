@@ -1,13 +1,35 @@
 import QtQuick 2.15
 
-Item {
-    property url source
+Rectangle {
+    property url source: "../media/no-image.png"
+    property real currentScaleFactor: 1.
 
     id: imageViewerContainer
-    width: 0.5 * parent.width
-    height: parent.height
+
+    function zoomImage(scaleFactor) {
+        currentScaleFactor *= scaleFactor
+
+        image.width *= currentScaleFactor
+        image.height *= currentScaleFactor
+    }
+
+    function onZoomIn() {
+        zoomImage(1.25)
+    }
+
+    function onZoomOut() {
+        zoomImage(0.8)
+    }
+
+    function onFitScreen() {
+        console.log("fit to the sceen")
+    }
 
     Image {
+        id: image
         source: parent.source
+        anchors {
+            centerIn: parent
+        }
     }
 }
