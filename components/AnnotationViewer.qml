@@ -14,7 +14,7 @@ Rectangle {
         }
 
         clip: true
-        model: 50
+        model: 10
         delegate: AnnotationItem {
             annotationId: index + 1
         }
