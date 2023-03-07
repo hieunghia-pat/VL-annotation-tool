@@ -63,13 +63,12 @@ ApplicationWindow {
 
     AnnotationViewer {
         id: annotationViewer
-
         anchors {
             right: parent.right
         }
-
         width: parent.width / 2
         height: parent.height
+        backend: model
     }
 
     header: MainToolBar {

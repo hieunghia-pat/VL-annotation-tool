@@ -5,10 +5,16 @@ import QtQml 2.3
 Rectangle {
 
     property int annotationId
+    property int index
+
+    signal addAnnotation(int index)
+    signal deleteAnnotation(int index)
+    signal addAnnotationResponse(int index)
 
     id: annotationItemContainer
     width: annotationViewerContainer.width - 10
-    height: annotationLabel.height + annotationContainer.height + responseContainer.height + 10
+    height: annotationLabel.height + annotationContainer.height
+            + responseAnnotationContainer.height + 10
 
     radius: 7
     border {
@@ -55,82 +61,22 @@ Rectangle {
 
             spacing: 10
 
-            Rectangle {
+            Icon {
                 id: addAnnotationIconContainer
-                width: 16
-                height: 16
-                radius: 16
-                Image {
-                    source: "../media/add-annotation.png"
-                    fillMode: Image.PreserveAspectFit
-                    anchors {
-                        fill: parent
-                        centerIn: parent
-                        verticalCenter: parent.verticalCenter
-                        horizontalCenter: parent.horizontalCenter
-                    }
-                }
-                color: "transparent"
-                MouseArea {
-                    id: addAnnotationIconMouseArea
-                    hoverEnabled: true
-                    anchors {
-                        fill: parent
-                        centerIn: parent
-                    }
-                }
+                iconUrl: "../media/add-annotation.png"
+                onSelected: addAnnotation(index)
             }
 
-            Rectangle {
+            Icon {
                 id: deleteAnnotationIconContainer
-                width: 16
-                height: 16
-                radius: 16
-                Image {
-                    source: "../media/delete-annotation.png"
-                    fillMode: Image.PreserveAspectFit
-                    anchors {
-                        fill: parent
-                        centerIn: parent
-                        verticalCenter: parent.verticalCenter
-                        horizontalCenter: parent.horizontalCenter
-                    }
-                }
-                color: "transparent"
-                MouseArea {
-                    id: deleteAnnotationIconMouseArea
-                    hoverEnabled: true
-                    anchors {
-                        fill: parent
-                        centerIn: parent
-                    }
-                }
+                iconUrl: "../media/delete-annotation.png"
+                onSelected: deleteAnnotation(index)
             }
 
-            Rectangle {
+            Icon {
                 id: addAnnotationResponseIconContainer
-                width: 16
-                height: 16
-                radius: 16
-                Image {
-                    source: "../media/down-left.png"
-                    fillMode: Image.PreserveAspectFit
-                    anchors {
-                        fill: parent
-                        centerIn: parent
-                        verticalCenter: parent.verticalCenter
-                        horizontalCenter: parent.horizontalCenter
-                    }
-                }
-                color: "transparent"
-                MouseArea {
-                    id: addAnnotationResponseIconMouseArea
-                    hoverEnabled: true
-                    anchors {
-                        fill: parent
-                        centerIn: parent
-                    }
-                }
+                iconUrl: "../media/down-left.png"
+                onSelected: addAnnotationResponse(index)
             }
         }
     }
@@ -144,49 +90,18 @@ Rectangle {
         }
     }
 
-    ResponseAnnotationEditor {
-        id: responseContainer
-        width: parent.width - 5
-
+    Rectangle {
+        id: responseAnnotationContainer
         anchors {
             top: annotationContainer.bottom
             horizontalCenter: parent.horizontalCenter
         }
-    }
+        width: parent.width - 10
+        height: responseAnnotationEditor.height
 
-    Connections {
-        target: addAnnotationIconMouseArea
-
-        function onEntered() {
-            addAnnotationIconContainer.color = "#a6a6a6"
-        }
-
-        function onExited() {
-            addAnnotationIconContainer.color = "transparent"
-        }
-    }
-
-    Connections {
-        target: deleteAnnotationIconMouseArea
-
-        function onEntered() {
-            deleteAnnotationIconContainer.color = "#a6a6a6"
-        }
-
-        function onExited() {
-            deleteAnnotationIconContainer.color = "transparent"
-        }
-    }
-
-    Connections {
-        target: addAnnotationResponseIconMouseArea
-
-        function onEntered() {
-            addAnnotationResponseIconContainer.color = "#a6a6a6"
-        }
-
-        function onExited() {
-            addAnnotationResponseIconContainer.color = "transparent"
+        ResponseAnnotationEditor {
+            id: responseAnnotationEditor
+            width: parent.width - 5
         }
     }
 }

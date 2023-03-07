@@ -58,91 +58,91 @@ Rectangle {
         }
     }
 
-    Rectangle {
-        id: lineButtonContainer
-        width: responseContainer.width - 10
-        height: 5
-        anchors {
-            bottom: responseContainer.bottom
-            horizontalCenter: responseContainer.horizontalCenter
-        }
-        color: "transparent"
+    //    Rectangle {
+    //        id: lineButtonContainer
+    //        width: responseContainer.width - 10
+    //        height: 5
+    //        anchors {
+    //            bottom: responseContainer.bottom
+    //            horizontalCenter: responseContainer.horizontalCenter
+    //        }
+    //        color: "transparent"
 
-        Row {
-            anchors {
-                centerIn: parent
-            }
-            spacing: 20
+    //        Row {
+    //            anchors {
+    //                centerIn: parent
+    //            }
+    //            spacing: 20
 
-            Rectangle {
-                id: addResponseIconContainer
-                width: 16
-                height: 16
-                visible: false
-                Image {
-                    id: addResponseIcon
-                    fillMode: Image.PreserveAspectFit
-                    source: "../media/add-response.png"
-                    anchors {
-                        fill: parent
-                        centerIn: parent
-                    }
-                }
-                MouseArea {
-                    id: addResponseIconMouseArea
-                    anchors {
-                        fill: parent
-                        centerIn: parent
-                    }
-                }
-            }
+    //            Rectangle {
+    //                id: addResponseIconContainer
+    //                width: 16
+    //                height: 16
+    //                visible: false
+    //                Image {
+    //                    id: addResponseIcon
+    //                    fillMode: Image.PreserveAspectFit
+    //                    source: "../media/add-response.png"
+    //                    anchors {
+    //                        fill: parent
+    //                        centerIn: parent
+    //                    }
+    //                }
+    //                MouseArea {
+    //                    id: addResponseIconMouseArea
+    //                    anchors {
+    //                        fill: parent
+    //                        centerIn: parent
+    //                    }
+    //                }
+    //            }
 
-            Rectangle {
-                id: deleteResponseIconContainer
-                width: 16
-                height: 16
-                visible: false
-                Image {
-                    id: deleteResponseIcon
-                    fillMode: Image.PreserveAspectFit
-                    source: "../media/delete.png"
-                    anchors {
-                        fill: parent
-                        centerIn: parent
-                    }
-                }
+    //            Rectangle {
+    //                id: deleteResponseIconContainer
+    //                width: 16
+    //                height: 16
+    //                visible: false
+    //                Image {
+    //                    id: deleteResponseIcon
+    //                    fillMode: Image.PreserveAspectFit
+    //                    source: "../media/delete.png"
+    //                    anchors {
+    //                        fill: parent
+    //                        centerIn: parent
+    //                    }
+    //                }
 
-                MouseArea {
-                    id: deleteResponseIconMouseArea
-                    anchors {
-                        fill: parent
-                        centerIn: parent
-                    }
-                }
-            }
-        }
+    //                MouseArea {
+    //                    id: deleteResponseIconMouseArea
+    //                    anchors {
+    //                        fill: parent
+    //                        centerIn: parent
+    //                    }
+    //                }
+    //            }
+    //        }
 
-        MouseArea {
-            id: lineButtonMouseArea
-            hoverEnabled: true
-            anchors {
-                fill: parent
-                centerIn: parent
-            }
-        }
-    }
+    //        MouseArea {
+    //            id: lineButtonMouseArea
+    //            hoverEnabled: true
+    //            anchors {
+    //                fill: parent
+    //                centerIn: parent
+    //            }
+    //        }
+    //    }
 
-    Connections {
-        target: lineButtonMouseArea
+    //    Connections {
+    //        target: lineButtonMouseArea
 
-        function onEntered() {
-            addResponseIconContainer.visible = true
-            deleteResponseIconContainer.visible = true
-        }
+    //        function onEntered() {
+    //            addResponseIconContainer.visible = true
+    //            deleteResponseIconContainer.visible = true
+    //        }
 
-        function onExited() {
-            addResponseIconContainer.visible = false
-            deleteResponseIconContainer.visible = false
-        }
-    }
+    //        function onExited() {
+    //            addResponseIconContainer.visible = false
+    //            deleteResponseIconContainer.visible = false
+    //        }
+    //    }
 }
