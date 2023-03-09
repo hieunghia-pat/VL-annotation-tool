@@ -4,9 +4,6 @@ import QtQml 2.3
 
 Rectangle {
 
-    property int annotationId
-    property int index
-
     signal addAnnotation(int index)
     signal deleteAnnotation(int index)
     signal addAnnotationResponse(int index)
@@ -34,7 +31,7 @@ Rectangle {
                 top: parent.top
                 margins: 5
             }
-            text: "Annotation " + annotationId
+            text: "Annotation " + (index + 1)
         }
         color: "transparent"
     }

@@ -2,9 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 Rectangle {
-
     id: container
-
     width: parent.width
     height: Math.max(iconContainer.height, responseContainer.height) + 20
 
@@ -46,6 +44,7 @@ Rectangle {
 
         TextEdit {
             id: responseEdit
+            text: model.response
             font.pixelSize: 20
             width: parent.width - 10
             anchors {
@@ -55,6 +54,7 @@ Rectangle {
                 horizontalCenter: parent.horizontalCenter
             }
             padding: 3
+            onEditingFinished: model.response = text
         }
     }
 

@@ -5,16 +5,22 @@ from pathlib import Path
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 
-from sources.Model import Model
+from sources.Annotation import Annotation
+from sources.Backend import Backend
+from sources.AnnotationModel import AnnotationModel
 
 if __name__ == "__main__":
 	app = QGuiApplication(sys.argv)
 
-	model = Model(app)
+	backend = Backend(app)
+	annotationModel = AnnotationModel([Annotation()])
 
 	engine = QQmlApplicationEngine()
 
-	engine.rootContext().setContextProperty("model", model)
+	engine.rootContext().setContextProperty("backend", backend)
+	engine.rootContext().setContextProperty("annotationModel", annotationModel)
+	
+	backend.loadedData.connect(annotationModel.setAnnotations)
 
 	qml_file = Path(__file__).resolve().parent / "main.qml"
 	engine.load(qml_file)

@@ -5,7 +5,6 @@ Rectangle {
     id: annotationViewerContainer
 
     property int total: 1
-    property var backend
 
     ListView {
         id: annotationView
@@ -17,10 +16,8 @@ Rectangle {
         }
 
         clip: true
-        model: backend
+        model: annotationModel
         delegate: AnnotationItem {
-            annotationId: index + 1
-            index: index
             onAddAnnotation: index => backend.addAnnotation(index)
 
             onDeleteAnnotation: index => backend.deleteAnnotation(index)

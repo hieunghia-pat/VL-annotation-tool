@@ -7,4 +7,5 @@ FolderDialog {
         title = title
         acceptLabel = acceptLabel
     }
+    modality: Qt.ApplicationModal
 }

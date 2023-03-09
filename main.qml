@@ -22,7 +22,7 @@ ApplicationWindow {
         currentFolder: StandardPaths.standardLocations(
                            StandardPaths.DocumentsLocation)[0]
         onAccepted: {
-            model.setSelectedFolderToOpen(currentFolder)
+            backend.setSelectedFolderToOpen(currentFolder)
         }
     }
 
@@ -31,7 +31,7 @@ ApplicationWindow {
     }
 
     Connections {
-        target: model
+        target: backend
 
         function onOpenNewFolder() {
             messageWindow.message = "Opened a new folder"
@@ -68,7 +68,6 @@ ApplicationWindow {
         }
         width: parent.width / 2
         height: parent.height
-        backend: model
     }
 
     header: MainToolBar {

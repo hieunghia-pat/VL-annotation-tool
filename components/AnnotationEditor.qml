@@ -20,6 +20,7 @@ Rectangle {
 
         TextEdit {
             id: textEdit
+            text: model.sentence
             font.pixelSize: 20
             width: parent.width - 10
             anchors {
@@ -28,6 +29,7 @@ Rectangle {
                 margins: 5
             }
             padding: 3
+            onEditingFinished: model.sentence = text
         }
     }
 }
