@@ -18,12 +18,8 @@ Rectangle {
         clip: true
         model: annotationModel
         delegate: AnnotationItem {
-            onAddAnnotation: index => backend.addAnnotation(index)
-
-            onDeleteAnnotation: index => backend.deleteAnnotation(index)
-
-            onAddAnnotationResponse: index => backend.addAnnotationResponse(
-                                         index)
+            onAddAnnotation: index => annotationModel.addAnnotation(index)
+            onDeleteAnnotation: index => annotationModel.deleteAnnotation(index)
         }
 
         spacing: 20

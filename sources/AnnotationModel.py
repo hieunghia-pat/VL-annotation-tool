@@ -8,10 +8,18 @@ class AnnotationModel(QAbstractListModel):
 	SENTENCE = Qt.UserRole
 	RESPONSE = Qt.UserRole + 1
 	
-	def __init__(self, annotations=Annotation()):
+	def __init__(self, annotations=[Annotation()]):
 		super(AnnotationModel, self).__init__()
 		
 		self.__annotations = annotations
+		
+	@property
+	def annotations(self):
+		anns = []
+		for __annotation in self.__annotations:
+			anns.append(__annotation.annotation)
+			
+		return anns
 		
 	@Slot(list)
 	def setAnnotations(self, annotations):
@@ -34,7 +42,19 @@ class AnnotationModel(QAbstractListModel):
 										annotation.response(), self.RESPONSE)
 			if not setResponse:
 				raise Exception(f"Cannot set response for annotation {index}")
-		
+			
+	@Slot(int)
+	def addAnnotation(self, index: int):
+		self.insertRow(index+1)
+	
+	@Slot(int)
+	def deleteAnnotation(self, index: int):
+		if self.rowCount() == 1:
+			self.setAnnotations([Annotation()])	
+			return
+
+		self.removeRow(index)
+
 	def rowCount(self, parent: QModelIndex=QModelIndex()) -> int:
 		return len(self.__annotations)
 	

@@ -2,6 +2,9 @@ import QtQuick
 import QtQuick.Controls
 
 Rectangle {
+
+    signal deleteAnnotationResponse
+
     id: container
     width: parent.width
     height: Math.max(iconContainer.height, responseContainer.height) + 20
@@ -56,93 +59,76 @@ Rectangle {
             padding: 3
             onEditingFinished: model.response = text
         }
+
+        Connections {
+            target: container
+
+            function onDeleteAnnotationResponse() {
+                responseEdit.clear()
+            }
+        }
     }
 
-    //    Rectangle {
-    //        id: lineButtonContainer
-    //        width: responseContainer.width - 10
-    //        height: 5
-    //        anchors {
-    //            bottom: responseContainer.bottom
-    //            horizontalCenter: responseContainer.horizontalCenter
-    //        }
-    //        color: "transparent"
+    Rectangle {
+        id: lineButtonContainer
+        width: responseContainer.width - 10
+        height: 7
+        anchors {
+            bottom: responseContainer.bottom
+            horizontalCenter: responseContainer.horizontalCenter
+        }
+        color: "transparent"
 
-    //        Row {
-    //            anchors {
-    //                centerIn: parent
-    //            }
-    //            spacing: 20
+        Row {
+            anchors {
+                centerIn: parent
+            }
+            spacing: 20
 
-    //            Rectangle {
-    //                id: addResponseIconContainer
-    //                width: 16
-    //                height: 16
-    //                visible: false
-    //                Image {
-    //                    id: addResponseIcon
-    //                    fillMode: Image.PreserveAspectFit
-    //                    source: "../media/add-response.png"
-    //                    anchors {
-    //                        fill: parent
-    //                        centerIn: parent
-    //                    }
-    //                }
-    //                MouseArea {
-    //                    id: addResponseIconMouseArea
-    //                    anchors {
-    //                        fill: parent
-    //                        centerIn: parent
-    //                    }
-    //                }
-    //            }
+            Rectangle {
+                id: deleteResponseIconButton
+                width: 16
+                height: 16
+                visible: false
+                Image {
+                    source: "../media/delete.png"
+                    fillMode: Image.PreserveAspectFit
+                    anchors {
+                        centerIn: parent
+                        fill: parent
+                    }
+                }
+                MouseArea {
+                    id: deleteResponseMouseArea
+                    anchors {
+                        fill: parent
+                        centerIn: parent
+                    }
+                    onClicked: deleteAnnotationResponse()
+                }
+            }
+        }
 
-    //            Rectangle {
-    //                id: deleteResponseIconContainer
-    //                width: 16
-    //                height: 16
-    //                visible: false
-    //                Image {
-    //                    id: deleteResponseIcon
-    //                    fillMode: Image.PreserveAspectFit
-    //                    source: "../media/delete.png"
-    //                    anchors {
-    //                        fill: parent
-    //                        centerIn: parent
-    //                    }
-    //                }
+        MouseArea {
+            id: lineButtonMouseArea
+            hoverEnabled: true
+            propagateComposedEvents: true
+            anchors {
+                fill: parent
+                centerIn: parent
+            }
+        }
+    }
 
-    //                MouseArea {
-    //                    id: deleteResponseIconMouseArea
-    //                    anchors {
-    //                        fill: parent
-    //                        centerIn: parent
-    //                    }
-    //                }
-    //            }
-    //        }
+    Connections {
+        target: lineButtonMouseArea
 
-    //        MouseArea {
-    //            id: lineButtonMouseArea
-    //            hoverEnabled: true
-    //            anchors {
-    //                fill: parent
-    //                centerIn: parent
-    //            }
-    //        }
-    //    }
+        function onEntered() {
+            deleteResponseIconButton.visible = true
+        }
 
-    //    Connections {
-    //        target: lineButtonMouseArea
-
-    //        function onEntered() {
-    //            addResponseIconContainer.visible = true
-    //            deleteResponseIconContainer.visible = true
-    //        }
-
-    //        function onExited() {
-    //            addResponseIconContainer.visible = false
-    //            deleteResponseIconContainer.visible = false
-    //        }
-    //    }
+        function onExited() {
+            deleteResponseIconButton.visible = false
+        }
+    }
 }

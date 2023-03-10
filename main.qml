@@ -52,13 +52,12 @@ ApplicationWindow {
 
     ImageViewer {
         id: imageViewer
-
         anchors {
             left: parent.left
         }
-
         width: parent.width / 2
         height: parent.height
+        source: backend.image
     }
 
     AnnotationViewer {

@@ -6,7 +6,6 @@ Rectangle {
 
     signal addAnnotation(int index)
     signal deleteAnnotation(int index)
-    signal addAnnotationResponse(int index)
 
     id: annotationItemContainer
     width: annotationViewerContainer.width - 10
@@ -44,8 +43,8 @@ Rectangle {
             right: parent.right
             top: parent.top
         }
-
         color: "transparent"
+
         Row {
             id: iconsContainer
             anchors {
@@ -73,7 +72,10 @@ Rectangle {
             Icon {
                 id: addAnnotationResponseIconContainer
                 iconUrl: "../media/down-left.png"
-                onSelected: addAnnotationResponse(index)
+                onSelected: {
+                    responseAnnotationContainer.visible = true
+                    responseAnnotationContainer.height = responseAnnotationEditor.height
+                }
             }
         }
     }
@@ -94,11 +96,16 @@ Rectangle {
             horizontalCenter: parent.horizontalCenter
         }
         width: parent.width - 10
-        height: responseAnnotationEditor.height
+        height: 0
+        visible: false
 
         ResponseAnnotationEditor {
             id: responseAnnotationEditor
             width: parent.width - 5
+            onDeleteAnnotationResponse: {
+                responseAnnotationContainer.visible = false
+                responseAnnotationContainer.height = 0
+            }
         }
     }
 }

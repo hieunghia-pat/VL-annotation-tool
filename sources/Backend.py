@@ -43,6 +43,14 @@ class Backend(QObject):
 				
 		return anns
 	
+	@property
+	def image(self):
+		url = self.__data["image"][self.__currentIndex]["url"]
+		if url is None:
+			url = "../media/no-image.png"
+		print(url)
+		return url
+	
 	def __len__(self):
 		return len(self.__data["images"])
 	
@@ -51,8 +59,9 @@ class Backend(QObject):
 		anns = self.annotationModel.annotations
 		for ann in anns:
 			for ith in len(self.__data["annotations"]):
-				if self.__data["annotations"][ith]["id"] == ann["id"]:
-					self.__data["annotations"][ith] = ann
+				if self.__data["annotations"][ith]["id"] == ann.id():
+					self.__data["annotations"][ith] = ann.annotation
+					continue
 
 	@Slot(str, result=None)
 	def setSelectedFolderToOpen(self, selectedFolderToOpen: str) -> None:
@@ -62,18 +71,6 @@ class Backend(QObject):
 	@Slot(str, result=None)
 	def setSelectedFolderToSave(self, selectedFolderToSave: str) -> None:
 		self.__selectedFolderToSave = self.__preprocessPath(selectedFolderToSave)
-		
-	@Slot(int, result=None)
-	def addAnnotation(self, index: int) -> None:
-		print(index)
-		
-	@Slot(int, result=None)
-	def deleteAnnotation(self, index: int) -> None:
-		print(index)
-		
-	@Slot(int, result=None)
-	def addAnnotationResponse(self, index: int) -> None:
-		print(index)
 	
 	@Slot(None, result=None)
 	def nextImage(self) -> None:

@@ -23,6 +23,7 @@ Rectangle {
             text: model.sentence
             font.pixelSize: 20
             width: parent.width - 10
+            focus: true
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 verticalCenter: parent.verticalCenter
@@ -30,6 +31,20 @@ Rectangle {
             }
             padding: 3
             onEditingFinished: model.sentence = text
+
+            Shortcut {
+                id: nextImageInAnnotationEditor
+                sequence: "Alt+right"
+                onActivated: backend.nextImage()
+                context: Qt.WindowShortcut
+            }
+
+            Shortcut {
+                id: previousImageInAnnotationEditor
+                sequence: "Alt+left"
+                onActivated: backend.previousImage()
+                context: Qt.WindowShortcut
+            }
         }
     }
 }

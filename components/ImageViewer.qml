@@ -1,7 +1,7 @@
 import QtQuick 2.15
 
 Rectangle {
-    property url source: "../media/no-image.png"
+    property url source
     property real currentScaleFactor: 1.
 
     id: imageViewerContainer
