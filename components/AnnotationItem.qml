@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
-import QtQml 2.3
+import QtQml
+import Qt5Compat.GraphicalEffects
 
 Rectangle {
 
@@ -11,11 +12,21 @@ Rectangle {
     width: annotationViewerContainer.width - 10
     height: annotationLabel.height + annotationContainer.height
             + responseAnnotationContainer.height + 10
-
     radius: 7
     border {
         width: 1
         color: "#e0e0e0"
+    }
+    color: "transparent"
+
+    MouseArea {
+        hoverEnabled: true
+        onEntered: annotationItemContainer.color = "#fafafa"
+        onExited: annotationItemContainer.color = "transparent"
+        anchors {
+            fill: parent
+            centerIn: parent
+        }
     }
 
     Rectangle {
@@ -87,6 +98,9 @@ Rectangle {
             top: annotationLabel.bottom
             horizontalCenter: parent.horizontalCenter
         }
+        onAddAnnotation: addAnnotationIconContainer.selected()
+        onDeleteAnnotation: deleteAnnotationIconContainer.selected()
+        onAddAnnotationResponse: addAnnotationResponseIconContainer.selected()
     }
 
     Rectangle {
@@ -98,6 +112,7 @@ Rectangle {
         width: parent.width - 10
         height: 0
         visible: false
+        color: "transparent"
 
         ResponseAnnotationEditor {
             id: responseAnnotationEditor

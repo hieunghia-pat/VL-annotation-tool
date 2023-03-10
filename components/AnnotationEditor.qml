@@ -2,7 +2,12 @@ import QtQuick
 import QtQuick.Controls
 
 Rectangle {
+    signal addAnnotation
+    signal deleteAnnotation
+    signal addAnnotationResponse
+
     height: textEditContainer.height + 10
+    color: "transparent"
 
     Rectangle {
         id: textEditContainer
@@ -17,6 +22,7 @@ Rectangle {
             color: "#e0e0e0"
             width: 1
         }
+        color: "transparent"
 
         TextEdit {
             id: textEdit
@@ -33,17 +39,21 @@ Rectangle {
             onEditingFinished: model.sentence = text
 
             Shortcut {
-                id: nextImageInAnnotationEditor
-                sequence: "Alt+right"
-                onActivated: backend.nextImage()
-                context: Qt.WindowShortcut
+                id: addAnnotationShortcut
+                sequence: "Alt+Return"
+                onActivated: addAnnotation()
             }
 
             Shortcut {
-                id: previousImageInAnnotationEditor
-                sequence: "Alt+left"
-                onActivated: backend.previousImage()
-                context: Qt.WindowShortcut
+                id: deleteAnnotationShortcut
+                sequence: "Alt+Del"
+                onActivated: deleteAnnotation()
+            }
+
+            Shortcut {
+                id: addAnnotationResponseShortcut
+                sequence: "Ctrl+Alt+Return"
+                onActivated: addAnnotationResponse()
             }
         }
     }

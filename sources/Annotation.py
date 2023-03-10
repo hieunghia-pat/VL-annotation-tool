@@ -7,18 +7,18 @@ class Annotation(QObject):
 	responseChanged = Signal(str)
 	
 	def __init__(self, annotation={
-		"id": None,
+		"image_id": None,
 		"sentence": "",
 		"response": ""
 	}):
 		super(Annotation, self).__init__()
 		
-		self.__id = annotation["id"]
+		self.__imageId = annotation["image_id"]
 		self.__sentence = annotation["sentence"]
 		self.__response = annotation["response"]
 		
-	def id(self):
-		return self.__id
+	def imageId(self):
+		return self.__imageId
 		
 	def sentence(self):
 		return self.__sentence
@@ -30,14 +30,14 @@ class Annotation(QObject):
 	def annotation(self):
 		assert self.id() is not None
 		return {
-			"id": self.id(),
+			"image_id": self.imageId(),
 			"sentence": self.sentence(),
 			"response": self.response(),
 		}
 	
 	@Slot(int)
-	def setId(self, id):
-		self.__id = id
+	def setImageId(self, imageId):
+		self.__imageId = imageId
 	
 	@Slot(str)
 	def setSentence(self, sentence):

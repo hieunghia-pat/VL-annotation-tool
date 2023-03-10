@@ -72,4 +72,18 @@ ApplicationWindow {
     header: MainToolBar {
         folderDialog: folderDialog
     }
+
+    Shortcut {
+        id: nextImageShorcut
+        sequence: "Alt+right"
+        onActivated: backend.nextImage()
+        context: Qt.ApplicationShortcut
+    }
+
+    Shortcut {
+        id: previousImageShorcut
+        sequence: "Alt+left"
+        onActivated: backend.previousImage()
+        context: Qt.ApplicationShortcut
+    }
 }

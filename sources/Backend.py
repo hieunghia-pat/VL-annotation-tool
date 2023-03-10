@@ -2,38 +2,57 @@ import json
 import os
 import re
 
-from PySide6.QtCore import QObject, Signal, Slot, QStandardPaths, Property
+from PySide6.QtCore import QObject, Signal, Slot, Property, QDir
 
 from sources.Annotation import Annotation
 
+EMPTY_DATA = {
+	"images": [{
+		"id": 0,
+		"filename": "media/no-image.png"
+	}],
+	"annotations": [{
+		"image_id": 0,
+		"sentence": "",
+		"response": ""
+	}]
+}
+
 class Backend(QObject):
 
-	# signals
-	selectedFolderToOpenChanged = Signal(str)
-	selectedFolderToSaveChanged = Signal(str)
-	openFolderError = Signal(str)
-	openNewFolder = Signal(None)
-	loadedData = Signal(list)
-
-	def __init__(self, parent: QObject):
+	def __init__(self, annotationModel, parent: QObject):
 		super(Backend, self).__init__(parent)
 
 		# private members
-		self.__data = {}
+		self.__data = EMPTY_DATA
 		self.__currentIndex = 0
-		self.__selectedFolderToOpen = QStandardPaths.standardLocations(QStandardPaths.DocumentsLocation)[0]
-		self.__selectedFolderToSave = QStandardPaths.standardLocations(QStandardPaths.DocumentsLocation)[0]
+		self.__selectedFolderToOpen = QDir.currentPath()
+		self.__selectedFolderToSave = QDir.currentPath()
+		self.__annotationModel = annotationModel
 
-	# Q_PROPERTIES
+	loadedAnnotations = Signal(list)
+	openNewFolder = Signal(None)
+	selectedFolderToOpenChanged = Signal(str)
+	selectedFolderToSaveChanged = Signal(str)
+	openFolderError = Signal(str)
+	
 	@Property(str)
 	def selectedFolderToOpen(self) -> str:
 		return self.__selectedFolderToOpen
+	
+	@selectedFolderToOpen.setter
+	def selectedFolderToOpen(self, selectedFolder: str):
+		self.__selectedFolderToOpen = selectedFolder
 
 	@Property(str)
 	def selectedFolderToSave(self) -> str:
 		return self.__selectedFolderToSave
 	
-	@property
+	@selectedFolderToSave.setter
+	def selectedFolderToSave(self, selectedFolder: str):
+		self.__selectedFolderToSave = selectedFolder
+	
+	@Property(list)
 	def annotations(self) -> list:
 		anns = []
 		image_id = self.__data["images"][self.__currentIndex]["id"]
@@ -42,13 +61,12 @@ class Backend(QObject):
 				anns.append(Annotation(ann))
 				
 		return anns
-	
-	@property
+
+	@Property(str)
 	def image(self):
-		url = self.__data["image"][self.__currentIndex]["url"]
-		if url is None:
-			url = "../media/no-image.png"
-		print(url)
+		url = self.__data["images"][self.__currentIndex]["filename"]
+		url = os.path.join(self.selectedFolderToOpen, url)
+
 		return url
 	
 	def __len__(self):
@@ -56,11 +74,12 @@ class Backend(QObject):
 	
 	@Slot(None, result=None)
 	def updateAnnotations(self):
-		anns = self.annotationModel.annotations
+		anns = self.__annotationModel.annotations
 		for ann in anns:
 			for ith in len(self.__data["annotations"]):
-				if self.__data["annotations"][ith]["id"] == ann.id():
-					self.__data["annotations"][ith] = ann.annotation
+				if self.__data["annotations"][ith]["image_id"] == ann.imageId():
+					self.__data["annotations"][ith]["sentence"] = ann.sentence()
+					self.__data["annotations"][ith]["response"] = ann.response()
 					continue
 
 	@Slot(str, result=None)
@@ -71,18 +90,17 @@ class Backend(QObject):
 	@Slot(str, result=None)
 	def setSelectedFolderToSave(self, selectedFolderToSave: str) -> None:
 		self.__selectedFolderToSave = self.__preprocessPath(selectedFolderToSave)
+		self.__saveData()
 	
 	@Slot(None, result=None)
 	def nextImage(self) -> None:
-		self.updateAnnotations()
 		self.__currentIndex = (self.__currentIndex + 1) % len(self)
-		self.loadedData.emit(self.annotations)
+		self.loadedAnnotations.emit(self.annotations)
 	
 	@Slot(None, result=None)
 	def previousImage(self) -> None:
-		self.updateAnnotations()
 		self.__currentIndex = max((self.__currentIndex - 1), 0)
-		self.loadedData.emit(self.annotations)
+		self.loadedAnnotations.emit(self.annotations)
 		
 	def data(self):
 		return self.__data
@@ -95,14 +113,11 @@ class Backend(QObject):
 		
 	def __loadData(self) -> bool:
 		try:
-			tmpData = json.load(open(os.path.join(self.__selectedFolderToOpen, "annotation.json")))
+			tmpData = json.load(open(os.path.join(self.selectedFolderToOpen, "annotation.json")))
 		except FileNotFoundError:
 			# when opening a new folder, set the self.__data to empty w.r.t total number 
 			# of images available in the folder
-			tmpData = {
-				"images": [],
-				"annotations": []
-			}
+			tmpData = EMPTY_DATA
 			image_id = 0
 			files = os.listdir(self.selectedFolderToOpen)
 			for file in files:
@@ -126,6 +141,9 @@ class Backend(QObject):
 			return False
 
 		self.__data = tmpData
-		self.loadedData.emit(self.annotations)
+		self.loadedAnnotations.emit(self.annotations)
 
 		return True
+	
+	def __saveData(self) -> bool:
+		pass

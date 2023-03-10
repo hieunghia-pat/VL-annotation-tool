@@ -22,10 +22,10 @@ class AnnotationModel(QAbstractListModel):
 		return anns
 		
 	@Slot(list)
-	def setAnnotations(self, annotations):
+	def setAnnotations(self, annotations: list):
 		# remove all former annotations
 		for index in range(self.rowCount()):
-			self.removeRow(index)
+			self.removeRow(0)
 		
 		# reset the annotations
 		self.__annotations = []
@@ -59,7 +59,7 @@ class AnnotationModel(QAbstractListModel):
 		return len(self.__annotations)
 	
 	def data(self, index: QModelIndex, role):
-		if index.row() < 0 or index.row() >= self.rowCount():
+		if not index.isValid():
 			return None
 		
 		if role == self.SENTENCE:
@@ -111,7 +111,7 @@ class AnnotationModel(QAbstractListModel):
 			self.RESPONSE: b"response"
 		}
 
-	def flags(self, index):
+	def flags(self, index: QModelIndex):
 		if not index.isValid():
 			return Qt.ItemIsEnabled
 		return super().flags(index) | Qt.ItemIsEditable

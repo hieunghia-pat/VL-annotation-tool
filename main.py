@@ -12,15 +12,15 @@ from sources.AnnotationModel import AnnotationModel
 if __name__ == "__main__":
 	app = QGuiApplication(sys.argv)
 
-	backend = Backend(app)
 	annotationModel = AnnotationModel([Annotation()])
+	backend = Backend(annotationModel, app)
 
 	engine = QQmlApplicationEngine()
 
 	engine.rootContext().setContextProperty("backend", backend)
 	engine.rootContext().setContextProperty("annotationModel", annotationModel)
 	
-	backend.loadedData.connect(annotationModel.setAnnotations)
+	backend.loadedAnnotations.connect(annotationModel.setAnnotations)
 
 	qml_file = Path(__file__).resolve().parent / "main.qml"
 	engine.load(qml_file)

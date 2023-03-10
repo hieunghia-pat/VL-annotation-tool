@@ -8,6 +8,7 @@ Rectangle {
     id: container
     width: parent.width
     height: Math.max(iconContainer.height, responseContainer.height) + 20
+    color: "transparent"
 
     Rectangle {
         id: iconContainer
@@ -17,6 +18,7 @@ Rectangle {
             right: responseContainer.left
             verticalCenter: parent.verticalCenter
         }
+        color: "transparent"
 
         Image {
             source: "../media/down-right.png"
@@ -44,6 +46,7 @@ Rectangle {
             width: 1
         }
         radius: 7
+        color: "transparent"
 
         TextEdit {
             id: responseEdit

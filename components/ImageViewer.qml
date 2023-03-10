@@ -30,6 +30,16 @@ Rectangle {
         source: parent.source
         anchors {
             centerIn: parent
+            fill: parent
+        }
+        fillMode: Image.PreserveAspectFit
+    }
+
+    Connections {
+        target: backend
+
+        function onLoadedAnnotations() {
+            image.source = backend.image
         }
     }
 }
