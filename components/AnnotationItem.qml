@@ -110,8 +110,8 @@ Rectangle {
             horizontalCenter: parent.horizontalCenter
         }
         width: parent.width - 10
-        height: 0
-        visible: false
+        height: responseAnnotationEditor.height
+        visible: true
         color: "transparent"
 
         ResponseAnnotationEditor {

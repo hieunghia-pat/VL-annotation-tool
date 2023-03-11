@@ -4,8 +4,6 @@ import QtQuick.Controls 2.15
 Rectangle {
     id: annotationViewerContainer
 
-    property int total: 1
-
     ListView {
         id: annotationView
 

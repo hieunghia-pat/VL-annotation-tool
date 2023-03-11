@@ -17,7 +17,7 @@ ApplicationWindow {
         color: "white"
     }
 
-    FolderDialog {
+    DynamicFolderDialog {
         id: folderDialog
         currentFolder: StandardPaths.standardLocations(
                            StandardPaths.DocumentsLocation)[0]

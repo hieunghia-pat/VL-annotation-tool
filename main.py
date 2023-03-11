@@ -12,7 +12,7 @@ from sources.AnnotationModel import AnnotationModel
 if __name__ == "__main__":
 	app = QGuiApplication(sys.argv)
 
-	annotationModel = AnnotationModel([Annotation()])
+	annotationModel = AnnotationModel()
 	backend = Backend(annotationModel, app)
 
 	engine = QQmlApplicationEngine()

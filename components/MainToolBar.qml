@@ -15,6 +15,7 @@ ToolBar {
                 source: "../media/open-folder.png"
             }
             onClicked: {
+                folderDialog.mode = "open"
                 folderDialog.title = "Select Folder to Open"
                 folderDialog.acceptLabel = "Open"
                 folderDialog.open()
@@ -26,9 +27,7 @@ ToolBar {
                 source: "../media/save-folder.png"
             }
             onClicked: {
-                folderDialog.title = "Select Folder to Save"
-                folderDialog.acceptLabel = "Save"
-                folderDialog.open()
+                backend.saveData()
             }
         }
 

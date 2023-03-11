@@ -17,6 +17,7 @@ MenuBar {
             }
 
             onTriggered: {
+                folderDialog.mode = "open"
                 folderDialog.title = "Select Folder to Open"
                 folderDialog.acceptLabel = "Open"
                 folderDialog.open()
@@ -31,9 +32,7 @@ MenuBar {
             }
 
             onTriggered: {
-                folderDialog.title = "Select Folder to Save"
-                folderDialog.acceptLabel = "Save"
-                folderDialog.open()
+                backend.saveData()
             }
         }
 
