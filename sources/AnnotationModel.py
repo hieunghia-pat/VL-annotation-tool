@@ -5,21 +5,18 @@ from sources.Annotation import Annotation
 
 class AnnotationModel(QAbstractListModel):
 	# defined the roles
-	ID = Qt.UserRole
-	IMAGE_ID = Qt.UserRole + 1
-	SENTENCE = Qt.UserRole + 2
-	RESPONSE = Qt.UserRole + 3
+	SENTENCE = Qt.UserRole
+	RESPONSE = Qt.UserRole + 1
 	
 	def __init__(self, annotations=[]):
 		super(AnnotationModel, self).__init__()
 		
 		self.__annotations = annotations
 		
-	@property
 	def annotations(self):
 		anns = []
 		for __annotation in self.__annotations:
-			anns.append(__annotation.annotation)
+			anns.append(__annotation.annotation())
 			
 		return anns
 		
@@ -38,16 +35,6 @@ class AnnotationModel(QAbstractListModel):
 			if not insertedRow:
 				raise Exception(f"Cannot insert a row at index {index}")
 			
-			setId = self.setData(self.index(index, 0, QModelIndex()),
-										annotation.imageId(), self.ID)
-			if not setId:
-				raise Exception(f"Cannot set id for annotation {index}")
-			
-			setImageId = self.setData(self.index(index, 0, QModelIndex()),
-										annotation.imageId(), self.IMAGE_ID)
-			if not setImageId:
-				raise Exception(f"Cannot set image id for annotation {index}")
-			
 			setSentence = self.setData(self.index(index, 0, QModelIndex()), 
 										annotation.sentence(), self.SENTENCE)
 			if not setSentence:
@@ -64,10 +51,6 @@ class AnnotationModel(QAbstractListModel):
 	
 	@Slot(int)
 	def deleteAnnotation(self, index: int):
-		if self.rowCount() == 1:
-			self.setAnnotations([Annotation()])	
-			return
-
 		self.removeRow(index)
 
 	def rowCount(self, parent: QModelIndex=QModelIndex()) -> int:
@@ -76,11 +59,7 @@ class AnnotationModel(QAbstractListModel):
 	def data(self, index: QModelIndex, role):
 		if not index.isValid():
 			return None
-		
-		if role == self.ID:
-			return self.__annotations[index.row()].id()
-		if role == self.IMAGE_ID:
-			return self.__annotations[index.row()].id()
+
 		if role == self.SENTENCE:
 			return self.__annotations[index.row()].sentence()
 		if role == self.RESPONSE:
@@ -89,18 +68,8 @@ class AnnotationModel(QAbstractListModel):
 		return None
 	
 	def setData(self, index: QModelIndex, value, role: int = Qt.EditRole) -> bool:
-		if index.row() < 0 or index.row() >= self.rowCount():
+		if not index.isValid():
 			return False
-		
-		if role == self.ID:
-			self.__annotations[index.row()].setId(value)
-			self.dataChanged.emit(index, index)
-			return True
-		
-		if role == self.IMAGE_ID:
-			self.__annotations[index.row()].setImageId(value)
-			self.dataChanged.emit(index, index)
-			return True
 		
 		if role == self.SENTENCE:
 			self.__annotations[index.row()].setSentence(value)
@@ -136,7 +105,6 @@ class AnnotationModel(QAbstractListModel):
 		
 	def roleNames(self):
 		return {
-			self.ID: b"id",
 			self.SENTENCE: b"sentence",
 			self.RESPONSE: b"response"
 		}

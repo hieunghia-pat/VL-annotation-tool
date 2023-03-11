@@ -5,7 +5,6 @@ from pathlib import Path
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 
-from sources.Annotation import Annotation
 from sources.Backend import Backend
 from sources.AnnotationModel import AnnotationModel
 

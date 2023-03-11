@@ -36,7 +36,7 @@ Rectangle {
                 margins: 5
             }
             padding: 3
-            onEditingFinished: model.sentence = text
+            onTextChanged: model.sentence = text
 
             Shortcut {
                 id: addAnnotationShortcut

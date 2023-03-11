@@ -25,14 +25,17 @@ MenuBar {
         }
 
         Action {
+            id: saveAction
             text: qsTr("&Save")
             shortcut: StandardKey.Save
+            enabled: false
             icon {
                 source: "../media/save-folder.png"
             }
 
             onTriggered: {
                 backend.saveData()
+                enabled = false
             }
         }
 
@@ -128,6 +131,14 @@ MenuBar {
                 source: "../media/fit-screen.png"
             }
             onTriggered: imageViewer.onFitScreen()
+        }
+
+        Connections {
+            target: annotationModel
+
+            function onDataChanged() {
+                saveAction.enabled = true
+            }
         }
     }
 

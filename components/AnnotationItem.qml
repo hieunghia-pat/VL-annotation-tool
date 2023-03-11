@@ -19,16 +19,15 @@ Rectangle {
     }
     color: "transparent"
 
-    MouseArea {
-        hoverEnabled: true
-        onEntered: annotationItemContainer.color = "#fafafa"
-        onExited: annotationItemContainer.color = "transparent"
-        anchors {
-            fill: parent
-            centerIn: parent
-        }
-    }
-
+    //    MouseArea {
+    //        hoverEnabled: true
+    //        onEntered: annotationItemContainer.color = "#fafafa"
+    //        onExited: annotationItemContainer.color = "transparent"
+    //        anchors {
+    //            fill: parent
+    //            centerIn: parent
+    //        }
+    //    }
     Rectangle {
         id: annotationLabel
         width: labelText.implicitWidth
@@ -112,6 +111,8 @@ Rectangle {
         width: parent.width - 10
         height: responseAnnotationEditor.height
         visible: true
+        //		height: 0
+        //        visible: false
         color: "transparent"
 
         ResponseAnnotationEditor {

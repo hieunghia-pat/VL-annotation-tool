@@ -23,11 +23,14 @@ ToolBar {
         }
 
         ToolButton {
+            id: saveButton
+            enabled: false
             icon {
                 source: "../media/save-folder.png"
             }
             onClicked: {
                 backend.saveData()
+                enabled: false
             }
         }
 
@@ -97,6 +100,14 @@ ToolBar {
             }
             onClicked: {
                 mainWindow.close()
+            }
+        }
+
+        Connections {
+            target: annotationModel
+
+            function onDataChanged() {
+                saveButton.enabled = true
             }
         }
     }

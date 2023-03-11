@@ -86,4 +86,11 @@ ApplicationWindow {
         onActivated: backend.previousImage()
         context: Qt.ApplicationShortcut
     }
+
+    Shortcut {
+        id: addAnnotationShorcut
+        sequence: "Alt+Return"
+        onActivated: annotationModel.addAnnotation(-1)
+        context: Qt.ApplicationShortcut
+    }
 }
