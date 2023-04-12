@@ -4,10 +4,6 @@ import QtQml
 import Qt5Compat.GraphicalEffects
 
 Rectangle {
-
-    signal addAnnotation(int index)
-    signal deleteAnnotation(int index)
-
     id: annotationItemContainer
     width: annotationViewerContainer.width - 10
     height: annotationLabel.height + annotationContainer.height
@@ -19,15 +15,6 @@ Rectangle {
     }
     color: "transparent"
 
-    //    MouseArea {
-    //        hoverEnabled: true
-    //        onEntered: annotationItemContainer.color = "#fafafa"
-    //        onExited: annotationItemContainer.color = "transparent"
-    //        anchors {
-    //            fill: parent
-    //            centerIn: parent
-    //        }
-    //    }
     Rectangle {
         id: annotationLabel
         width: labelText.implicitWidth
@@ -68,19 +55,19 @@ Rectangle {
             spacing: 10
 
             Icon {
-                id: addAnnotationIconContainer
+                id: addAnnotationIcon
                 iconUrl: "../media/add-annotation.png"
-                onSelected: addAnnotation(index)
+                onSelected: annotationModel.addAnnotation(index)
             }
 
             Icon {
-                id: deleteAnnotationIconContainer
+                id: deleteAnnotationIcon
                 iconUrl: "../media/delete-annotation.png"
-                onSelected: deleteAnnotation(index)
+                onSelected: annotationModel.deleteAnnotation(index)
             }
 
             Icon {
-                id: addAnnotationResponseIconContainer
+                id: addAnnotationResponseIcon
                 iconUrl: "../media/down-left.png"
                 onSelected: {
                     responseAnnotationContainer.visible = true
@@ -97,9 +84,9 @@ Rectangle {
             top: annotationLabel.bottom
             horizontalCenter: parent.horizontalCenter
         }
-        onAddAnnotation: addAnnotationIconContainer.selected()
-        onDeleteAnnotation: deleteAnnotationIconContainer.selected()
-        onAddAnnotationResponse: addAnnotationResponseIconContainer.selected()
+        onAddAnnotation: addAnnotationIcon.select()
+        onDeleteAnnotation: deleteAnnotationIcon.select()
+        onAddAnnotationResponse: addAnnotationResponseIcon.select()
     }
 
     Rectangle {
@@ -111,8 +98,6 @@ Rectangle {
         width: parent.width - 10
         height: responseAnnotationEditor.height
         visible: true
-        //		height: 0
-        //        visible: false
         color: "transparent"
 
         ResponseAnnotationEditor {
@@ -121,6 +106,7 @@ Rectangle {
             onDeleteAnnotationResponse: {
                 responseAnnotationContainer.visible = false
                 responseAnnotationContainer.height = 0
+                responseAnnotationContainer.width = 0
             }
         }
     }

@@ -81,7 +81,7 @@ class Backend(QObject):
 	@Slot(None)
 	def saveData(self) -> bool:
 		self.updateAnnotations()
-		json.dump(self.__data, open(os.path.join(self.__selectedFolderToOpen, "annotation.json"), "w+"))
+		json.dump(self.__data, open(os.path.join(self.__selectedFolderToOpen, "annotations.json"), "w+"))
 	
 	# private methods
 	def __preprocessPath(self, path: str) -> str:
@@ -91,7 +91,7 @@ class Backend(QObject):
 		
 	def __loadData(self) -> bool:
 		try:
-			tmpData = json.load(open(os.path.join(self.selectedFolderToOpen, "annotation.json")))
+			tmpData = json.load(open(os.path.join(self.selectedFolderToOpen, "annotations.json")))
 		except FileNotFoundError:
 			# when opening a new folder, set the self.__data to empty w.r.t total number 
 			# of images available in the folder
@@ -104,7 +104,7 @@ class Backend(QObject):
 						"annotations": []
 					})
 			json.dump(tmpData, open(
-				os.path.join(self.selectedFolderToOpen, "annotation.json"), "w+"
+				os.path.join(self.selectedFolderToOpen, "annotations.json"), "w+"
 			))
 			self.openNewFolder.emit()
 		except Exception as error:

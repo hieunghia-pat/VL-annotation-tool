@@ -90,7 +90,10 @@ ApplicationWindow {
     Shortcut {
         id: addAnnotationShorcut
         sequence: "Alt+Return"
-        onActivated: annotationModel.addAnnotation(-1)
+        onActivated: {
+            console.log("In MainWindow, add new annotation")
+            annotationModel.addAnnotation(-1)
+        }   
         context: Qt.ApplicationShortcut
     }
 }

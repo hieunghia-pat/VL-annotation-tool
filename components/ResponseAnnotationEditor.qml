@@ -60,7 +60,9 @@ Rectangle {
                 horizontalCenter: parent.horizontalCenter
             }
             padding: 3
-            onTextChanged: model.response = text
+            onTextChanged: {
+                model.response = text
+            }
         }
 
         Connections {

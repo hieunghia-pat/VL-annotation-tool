@@ -37,24 +37,45 @@ Rectangle {
             }
             padding: 3
             onTextChanged: model.sentence = text
-
-            Shortcut {
-                id: addAnnotationShortcut
-                sequence: "Alt+Return"
-                onActivated: addAnnotation()
-            }
-
-            Shortcut {
-                id: deleteAnnotationShortcut
-                sequence: "Alt+Del"
-                onActivated: deleteAnnotation()
-            }
-
-            Shortcut {
-                id: addAnnotationResponseShortcut
-                sequence: "Ctrl+Alt+Return"
-                onActivated: addAnnotationResponse()
-            }
         }
     }
+
+    // Shortcut {
+    //     id: addAnnotationShortcut
+    //     sequence: "Alt+Return"
+    //     onActivated: {
+    //         console.log("In AnnotationEdit, add annotation")
+    //         addAnnotation()
+    //     }
+    //     context: Qt.ApplicationShortcut
+    // }
+
+    // Shortcut {
+    //     id: deleteAnnotationShortcut
+    //     sequence: "Alt+Del"
+    //     onActivated: {
+    //         console.log("In AnnotationEdit, delete annotation")
+    //         deleteAnnotation()
+    //     }
+    //     context: Qt.ApplicationShortcut
+    // }
+
+    // Shortcut {
+    //     id: addAnnotationResponseShortcut
+    //     sequence: "Ctrl+Return"
+    //     onActivated: {
+    //         console.log("In AnnotationEdit, add annotation response")
+    //         addAnnotationResponse()
+    //     }
+    //     context: Qt.ApplicationShortcut
+    // }
+
+    // Shortcut {
+    //     id: deleteAnnotationResponseShortcut
+    //     sequence: "Ctrl+Del"
+    //     onActivated: {
+    //         console.log("In AnnotationEdit, delete annotation response")
+    //     }
+    //     context: Qt.ApplicationShortcut
+    // }
 }
