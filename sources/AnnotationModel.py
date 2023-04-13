@@ -7,11 +7,13 @@ class AnnotationModel(QAbstractListModel):
 	# defined the roles
 	SENTENCE = Qt.UserRole
 	RESPONSE = Qt.UserRole + 1
+	SELECTED_INDEX = Qt.UserRole + 2
 	
 	def __init__(self, annotations=[]):
 		super(AnnotationModel, self).__init__()
 		
 		self.__annotations = annotations
+		self.__selectedIndex = 0
 		
 	def annotations(self):
 		anns = []
@@ -45,13 +47,18 @@ class AnnotationModel(QAbstractListModel):
 			if not setResponse:
 				raise Exception(f"Cannot set response for annotation {index}")
 			
-	@Slot(int)
-	def addAnnotation(self, index: int):
-		self.insertRow(index+1)
+		self.__selectedIndex = len(self.__annotations) - 1
+
+	@Slot()
+	def addAnnotation(self):
+		self.insertRow(self.__selectedIndex)
 	
-	@Slot(int)
-	def deleteAnnotation(self, index: int):
-		self.removeRow(index)
+	@Slot()
+	def deleteAnnotation(self):
+		if self.__selectedIndex == 0:
+			return
+		
+		self.removeRow(self.__selectedIndex - 1)
 
 	def rowCount(self, parent: QModelIndex=QModelIndex()) -> int:
 		return len(self.__annotations)
@@ -62,8 +69,12 @@ class AnnotationModel(QAbstractListModel):
 
 		if role == self.SENTENCE:
 			return self.__annotations[index.row()].sentence()
+		
 		if role == self.RESPONSE:
 			return self.__annotations[index.row()].response()
+		
+		if role == self.SELECTED_INDEX:
+			return self.__selectedIndex
 		
 		return None
 	
@@ -79,6 +90,10 @@ class AnnotationModel(QAbstractListModel):
 		if role == self.RESPONSE:
 			self.__annotations[index.row()].setResponse(value)
 			self.dataChanged.emit(index, index)
+			return True
+		
+		if role == self.SELECTED_INDEX:
+			self.__selectedIndex = int(value)
 			return True
 		
 		return False
@@ -106,7 +121,8 @@ class AnnotationModel(QAbstractListModel):
 	def roleNames(self):
 		return {
 			self.SENTENCE: b"sentence",
-			self.RESPONSE: b"response"
+			self.RESPONSE: b"response",
+			self.SELECTED_INDEX: b"selected_index"
 		}
 
 	def flags(self, index: QModelIndex):

@@ -57,13 +57,13 @@ Rectangle {
             Icon {
                 id: addAnnotationIcon
                 iconUrl: "../media/add-annotation.png"
-                onSelected: annotationModel.addAnnotation(index)
+                onSelected: annotationModel.addAnnotation()
             }
 
             Icon {
                 id: deleteAnnotationIcon
                 iconUrl: "../media/delete-annotation.png"
-                onSelected: annotationModel.deleteAnnotation(index)
+                onSelected: annotationModel.deleteAnnotation()
             }
 
             Icon {
@@ -84,9 +84,15 @@ Rectangle {
             top: annotationLabel.bottom
             horizontalCenter: parent.horizontalCenter
         }
-        onAddAnnotation: addAnnotationIcon.select()
-        onDeleteAnnotation: deleteAnnotationIcon.select()
-        onAddAnnotationResponse: addAnnotationResponseIcon.select()
+        onSelectedAnnotation: isFocus => {
+            if (isFocus) {
+                annotationModel.selected_index = index
+                annotationItemContainer.border.color = "#bababa"
+            }
+            else {
+                annotationItemContainer.border.color = "#e0e0e0"
+            }
+        }
     }
 
     Rectangle {
@@ -107,6 +113,15 @@ Rectangle {
                 responseAnnotationContainer.visible = false
                 responseAnnotationContainer.height = 0
                 responseAnnotationContainer.width = 0
+            }
+            onSelectedAnnotationResponse: isFocus => {
+                if (isFocus) {
+                    annotationModel.selected_index = index
+                    annotationItemContainer.border.color = "#bababa"
+                }
+                else {
+                    annotationItemContainer.border.color = "#e0e0e0"
+                }
             }
         }
     }

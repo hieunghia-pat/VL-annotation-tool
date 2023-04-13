@@ -3,7 +3,8 @@ import QtQuick.Controls
 
 Rectangle {
 
-    signal deleteAnnotationResponse
+    signal selectedAnnotationResponse(bool isFocus)
+    signal deleteAnnotationResponse()
 
     id: container
     width: parent.width
@@ -63,6 +64,7 @@ Rectangle {
             onTextChanged: {
                 model.response = text
             }
+            onFocusChanged: isFocus => selectedAnnotationResponse(isFocus)
         }
 
         Connections {

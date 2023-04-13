@@ -2,9 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 Rectangle {
-    signal addAnnotation
-    signal deleteAnnotation
-    signal addAnnotationResponse
+    signal selectedAnnotation(bool isFocus)
 
     height: textEditContainer.height + 10
     color: "transparent"
@@ -26,10 +24,8 @@ Rectangle {
 
         TextEdit {
             id: textEdit
-            text: model.sentence
             font.pixelSize: 20
             width: parent.width - 10
-            focus: true
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 verticalCenter: parent.verticalCenter
@@ -37,45 +33,11 @@ Rectangle {
             }
             padding: 3
             onTextChanged: model.sentence = text
+            onFocusChanged: isFocus => selectedAnnotation(isFocus)
+            Component.onCompleted: {
+                textEdit.focus = true
+                textEdit.text = model.sentence
+            }
         }
     }
-
-    // Shortcut {
-    //     id: addAnnotationShortcut
-    //     sequence: "Alt+Return"
-    //     onActivated: {
-    //         console.log("In AnnotationEdit, add annotation")
-    //         addAnnotation()
-    //     }
-    //     context: Qt.ApplicationShortcut
-    // }
-
-    // Shortcut {
-    //     id: deleteAnnotationShortcut
-    //     sequence: "Alt+Del"
-    //     onActivated: {
-    //         console.log("In AnnotationEdit, delete annotation")
-    //         deleteAnnotation()
-    //     }
-    //     context: Qt.ApplicationShortcut
-    // }
-
-    // Shortcut {
-    //     id: addAnnotationResponseShortcut
-    //     sequence: "Ctrl+Return"
-    //     onActivated: {
-    //         console.log("In AnnotationEdit, add annotation response")
-    //         addAnnotationResponse()
-    //     }
-    //     context: Qt.ApplicationShortcut
-    // }
-
-    // Shortcut {
-    //     id: deleteAnnotationResponseShortcut
-    //     sequence: "Ctrl+Del"
-    //     onActivated: {
-    //         console.log("In AnnotationEdit, delete annotation response")
-    //     }
-    //     context: Qt.ApplicationShortcut
-    // }
 }
